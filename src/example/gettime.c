@@ -5,24 +5,13 @@
 
 int main (void)
 {
-/*
 	char buff[32];
 
-	char buff2[32];
+	printf("rev1.1\n");
 	
-//	memcpy(buff2, getDateTimeFormat(buff, sizeof(buff)), 10);
-	strcpy(buff2, getDateTimeFormat(buff, sizeof(buff)));
-//	sprintf(buff2, "%s", getDateTimeFormat(buff, sizeof(buff)));
+	printf("time num %s\n", get_current_time(buff));
 
-	printf("%s\n", buff);
-	printf("%s\n", buff2);
-*/
-	
-	char buff[32];
-
-	getDateTimeFormat(buff, sizeof(buff));
-
-	printf("%s\n", buff);
+	printf("time str %s\n", time_to_timestamp(buff));
 
 	return 0;
 }

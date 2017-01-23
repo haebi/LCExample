@@ -16,7 +16,7 @@ void writeLog(char* file, char* msg)
 
 	memset(buf, 0x00, sizeof(buf));
 
-	sprintf(buf, "%s %s", getDateTimeFormat(timeStamp, sizeof(timeStamp)), msg);
+	sprintf(buf, "%s %s", get_current_timestamp(timeStamp), msg);
 	
 	// lock (support for multi-thread)
 	pthread_mutex_lock(&mutexLog);
