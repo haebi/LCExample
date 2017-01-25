@@ -7,8 +7,12 @@
 // get localtime
 // [REF] https://www.joinc.co.kr/w/man/3/localtime
 // [REF] https://www.ibm.com/support/knowledgecenter/ko/ssw_ibm_i_73/rtref/localtr.htm
-char* get_current_timestamp(char* dest)
+char* get_current_timestamp(char* dest, int length)
 {
+	char buf[32];
+
+	memset(buf, 0x00, sizeof(buf));
+
 	struct timeval tv; // for micro seconds
 	struct tm newtime; // current system timezone
 	time_t ltime;
@@ -21,9 +25,9 @@ char* get_current_timestamp(char* dest)
 
 	// get micro second
 	gettimeofday(&tv, NULL);
-	
+
 	// make timestamp
-	sprintf(dest, "%04d-%02d-%02d %02d:%02d:%02d.%06ld"
+	sprintf(buf, "%04d-%02d-%02d %02d:%02d:%02d.%06ld"
 			, newtime.tm_year+1900
 			, newtime.tm_mon+1
 			, newtime.tm_mday
@@ -32,11 +36,18 @@ char* get_current_timestamp(char* dest)
 			, newtime.tm_sec
 			, tv.tv_usec);
 
+	memcpy(dest, buf, length);
+	memset(dest + length -1, 0x00, 1);
+
 	return dest;
 }
 
-char* get_current_time(char* dest)
+char* get_current_time(char* dest, int length)
 {
+	char buf[32];
+
+	memset(buf, 0x00, sizeof(buf));
+
 	struct timeval tv; // for micro seconds
 	struct tm newtime; // current system timezone
 	time_t ltime;
@@ -49,9 +60,9 @@ char* get_current_time(char* dest)
 
 	// get micro second
 	gettimeofday(&tv, NULL);
-	
+
 	// make timestamp
-	sprintf(dest, "%04d%02d%02d%02d%02d%02d%06ld"
+	sprintf(buf, "%04d%02d%02d%02d%02d%02d%06ld"
 			, newtime.tm_year+1900
 			, newtime.tm_mon+1
 			, newtime.tm_mday
@@ -60,10 +71,13 @@ char* get_current_time(char* dest)
 			, newtime.tm_sec
 			, tv.tv_usec);
 
+	memcpy(dest, buf, length);
+	memset(dest + length -1, 0x00, 1);
+
 	return dest;
 }
 
-char* time_to_timestamp(char* dest)
+char* time_to_timestamp(char* dest, int length)
 {
 	char buf[32];
 
@@ -88,7 +102,8 @@ char* time_to_timestamp(char* dest)
 	memcpy(buf +20, dest +14, 6);
 
 	// export converted data
-	memcpy(dest, buf, sizeof(buf));
+	memcpy(dest, buf, length);
+	memset(dest + length -1, 0x00, 1);
 
 	return dest;
 }

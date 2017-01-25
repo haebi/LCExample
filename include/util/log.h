@@ -4,6 +4,6 @@
 
 #include <pthread.h>
 
-void writeLog(char* file, char* msg);
+void writeLog(const char* file, const char* msg);
 
 #endif

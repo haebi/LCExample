@@ -9,7 +9,19 @@ int main(int argc, char** argv)
 {
 	char file[255] = "writelog.txt";
 	char msg[128] = "write func test!!\n";
+	int i, loop;
 
+	if(argc > 1)
+	{
+		loop = atoi(argv[1]);
+
+		while(loop)
+		{
+			writeLog(file, msg);
+			loop--;
+		}
+	}
+	
 	writeLog(file, msg);
 
 	return 0;
