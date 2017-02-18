@@ -17,12 +17,12 @@ int main(int argc, char** argv)
 
 		while(loop)
 		{
-			writeLog(file, msg);
+			write_log(file, msg);
 			loop--;
 		}
 	}
 	
-	writeLog(file, msg);
+	write_log(file, msg);
 
 	return 0;
 }

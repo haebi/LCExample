@@ -4,6 +4,7 @@
 
 #include <pthread.h>
 
-void writeLog(const char* file, const char* msg);
+void write_log(const char* file, const char* msg);
+void write_log_hex(const char* file, const char* data, const int data_length);
 
 #endif
