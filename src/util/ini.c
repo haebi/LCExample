@@ -6,9 +6,9 @@
 #include "util/ini.h"
 
 // define macro function
-#define flag_set(FLAG, MASK)   FLAG |= MASK			// set
-#define flag_clear(FLAG, MASK) FLAG &= ~MASK			// clear
-#define flag_check(FLAG, MASK) (FLAG & MASK) == MASK ? 1 : 0 	// check
+#define flag_set(FLAG, MASK)   FLAG |= MASK				// set
+#define flag_clear(FLAG, MASK) FLAG &= ~MASK				// clear
+#define flag_check(FLAG, MASK) (FLAG & (MASK)) == (MASK) ? 1 : 0	// check
 
 // define flags
 #define IS_REMARK        0x01
@@ -68,7 +68,7 @@ char* read_ini(char* dest, const char* file, const char* section, const char* ke
 
 			// set state [key]
 			// no [, newline state
-			if(buf[i] != '[' && flag_check(flag, IS_LINE_FIRST) && flag_check(flag, IS_FOUND_SECTION))
+			if(buf[i] != '[' && flag_check(flag, IS_LINE_FIRST | IS_FOUND_SECTION))
 			{
 				flag_set(flag, IS_KEY);
 				pos = 0;
@@ -106,7 +106,7 @@ char* read_ini(char* dest, const char* file, const char* section, const char* ke
 			{
 				if(flag_check(flag, IS_VALUE))
 				{
-					if((flag & (IS_FOUND_SECTION | IS_FOUND_KEY)) == (IS_FOUND_SECTION | IS_FOUND_KEY))
+					if(flag_check(flag, IS_FOUND_SECTION | IS_FOUND_KEY))
 					{
 						flag_set(flag, IS_FOUND_VALUE);
 						break;
