@@ -6,8 +6,8 @@
 #include "util/ini.h"
 
 // define macro function
-#define flag_set(FLAG, MASK)   FLAG |= MASK				// set
-#define flag_clear(FLAG, MASK) FLAG &= ~MASK				// clear
+#define flag_set(FLAG, MASK)   FLAG |= (MASK)				// set
+#define flag_clear(FLAG, MASK) FLAG &= ~(MASK)				// clear
 #define flag_check(FLAG, MASK) (FLAG & (MASK)) == (MASK) ? 1 : 0	// check
 
 // define flags
@@ -80,7 +80,7 @@ char* read_ini(char* dest, const char* file, const char* section, const char* ke
 			{
 				flag_clear(flag, IS_SECTION);
 
-				if(memcmp(_section, section, strlen(section)) == 0)
+				if(memcmp(_section, section, strlen(_section)) == 0)
 				{
 					flag_set(flag, IS_FOUND_SECTION);
 				}
@@ -94,7 +94,7 @@ char* read_ini(char* dest, const char* file, const char* section, const char* ke
 				flag_set(flag, IS_VALUE);
 				pos = 0;
 
-				if(memcmp(_key, key, strlen(key)) == 0)
+				if(memcmp(_key, key, strlen(_key)) == 0)
 				{
 					flag_set(flag, IS_FOUND_KEY);
 				}
@@ -148,10 +148,7 @@ char* read_ini(char* dest, const char* file, const char* section, const char* ke
 		// set state [line first]
 		if(buf[i] == '\n')
 		{
-			flag_clear(flag, IS_REMARK );
-			flag_clear(flag, IS_SECTION);
-			flag_clear(flag, IS_KEY    );
-			flag_clear(flag, IS_VALUE  );
+			flag_clear(flag, IS_REMARK | IS_SECTION | IS_KEY | IS_VALUE);
 
 			flag_set(flag, IS_LINE_FIRST);
 
