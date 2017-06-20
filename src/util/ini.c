@@ -80,7 +80,8 @@ char* read_ini(char* dest, const char* file, const char* section, const char* ke
 			{
 				flag_clear(flag, IS_SECTION);
 
-				if(memcmp(_section, section, strlen(_section)) == 0)
+				if(memcmp(_section, section, strlen(_section)) == 0
+						&& strlen(section) == strlen(_section))
 				{
 					flag_set(flag, IS_FOUND_SECTION);
 				}
@@ -94,7 +95,8 @@ char* read_ini(char* dest, const char* file, const char* section, const char* ke
 				flag_set(flag, IS_VALUE);
 				pos = 0;
 
-				if(memcmp(_key, key, strlen(_key)) == 0)
+				if(memcmp(_key, key, strlen(_key)) == 0
+						&& strlen(key) == strlen(_key))
 				{
 					flag_set(flag, IS_FOUND_KEY);
 				}
@@ -104,13 +106,10 @@ char* read_ini(char* dest, const char* file, const char* section, const char* ke
 			// when encounted character \n , space or tab
 			if(buf[i] == '\n' || buf[i] == '\t' || buf[i] == ' ')
 			{
-				if(flag_check(flag, IS_VALUE))
+				if(flag_check(flag, IS_VALUE | IS_FOUND_SECTION | IS_FOUND_KEY))
 				{
-					if(flag_check(flag, IS_FOUND_SECTION | IS_FOUND_KEY))
-					{
-						flag_set(flag, IS_FOUND_VALUE);
-						break;
-					}
+					flag_set(flag, IS_FOUND_VALUE);
+					break;
 				}
 			}
 
